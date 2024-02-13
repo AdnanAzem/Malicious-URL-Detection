@@ -23,3 +23,42 @@ All the URLs are in one .csv file with 3 columns:
 </ul>
 
 <b>Our Dataset Link:</b> <a href="https://www.kaggle.com/datasets/samahsadiq/benign-and-malicious-urls">Dataset</a>
+
+## Feature Extraction
+The following features will be extracted from the URL for classification.
+<ol>
+<li>
+    Length Features
+    <ul>
+        <li>Length Of Url</li>
+        <li>Length of Hostname</li>
+        <li>Length Of Path</li>
+        <li>Length Of First Directory</li>
+    </ul>
+</li>
+   <br> 
+<li>
+    Count Features
+    <ul>
+        <li>Count Of '-'</li>
+        <li>Count Of '@'</li>
+        <li>Count Of '?'</li>
+        <li>Count Of '%'</li>
+        <li>Count Of '.'</li>
+        <li>Count Of '='</li>
+        <li>Count Of 'http'</li>
+        <li>Count Of 'www'</li>
+        <li>Count Of Digits</li>
+        <li>Count Of Letters</li>
+        <li>Count Of Number Of Directories</li>
+    </ul>
+</li>
+    <br>
+<li>
+    Binary Features
+    <ul>
+        <li>Use of IP or not</li>
+        <li>Use of Shortening URL or not</li>
+    </ul>
+</li>
+</ol>
