@@ -1,6 +1,16 @@
 from urllib.parse import urlparse
 import re
 import streamlit as st
+from PIL import Image
+import joblib
+
+rf_clf = joblib.load('../models/RandomForest.pkl')
+
+def predict_url(url):
+    url_features = extract_features(url)
+    rf_prediction = rf_clf.predict(url_features)
+    prediction = rf_prediction
+    return prediction
 
 def redirection(url):
     pos = url.rfind('//')
@@ -162,30 +172,53 @@ def extract_features(url):
 
     return
 
-def main():
-    """Phishing URL Detection App
-    With Streamlit
+def load_images(file_name):
+    img = Image.open(file_name)
+    return st.image(img, width=150)
 
-  """
+def main():
+    image = Image.open('./pictures/cyber-security.jpeg')
+    image2 = Image.open('./pictures/ariel-logo.jpeg')
+
+    col1, mid, col2 = st.columns([1, 1, 100])
+    with col1:
+        st.image(image, width=150)
+    with mid:
+        st.image(image2, width=150)
+
     st.title("Malicious URL Detection")
+  #   """Phishing URL Detection App
+  #   With Streamlit
+  #
+  # """
+
     html_temp = """
   <div style="background-color:blue;padding:10px">
   <h2 style="color:grey;text-align:center;">Streamlit App </h2>
   </div>
 
   """
-    st.markdown(html_temp, unsafe_allow_html=True)
+    # st.markdown(html_temp, unsafe_allow_html=True)
     url = st.text_input("Enter website address or URL")
 
-    # if st.button("Predict"):
-    #     result = predict_url(url)
-    #
-    #     if result >= 0.6:
-    #         prediction = 'phishing website'
-    #     else:
-    #         prediction = 'benign website'
-    #
-    #     st.success('The URL was classified as a {}'.format(prediction))
+    if st.button("Predict"):
+        result = predict_url(url)
+
+        if result >= 0.6:
+            prediction = 'phishing website'
+            img = 'bad.png'
+            st.warning('The video: {}  is a malicious video'.format(prediction))
+        else:
+            prediction = 'benign website'
+            img = 'good.png'
+            st.success('The URL was classified as a {}'.format(prediction))
+
+
+        load_images(img)
+
+    st.subheader("About")
+    st.info("Adnan Azem & Jode Shibli Final Project")
+    st.info("Link to the project:  "+ "")
 
 
 if __name__ == '__main__':
