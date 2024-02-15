@@ -1,0 +1,7 @@
+streamlit
+joblib
+requests
+beautifulsoup4
+publicsuffixlist
+sklearn
+scikit-learn
