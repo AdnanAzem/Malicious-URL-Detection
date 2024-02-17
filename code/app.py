@@ -4,12 +4,14 @@ import streamlit as st
 from PIL import Image
 import joblib
 
-rf_clf = joblib.load('../models/RandomForest.pkl')
+# rf_clf = joblib.load('../models/RandomForest.pkl')
+rf_clf = joblib.load('../models/DisicionTree.pkl')
 
 def predict_url(url):
+
     url_features = extract_features(url)
-    rf_prediction = rf_clf.predict(url_features)
-    prediction = rf_prediction
+    rf_prediction = rf_clf.predict([url_features])
+    prediction = rf_prediction[0]
     return prediction
 
 def redirection(url):
@@ -170,7 +172,7 @@ def extract_features(url):
     i = prefixSuffix(url)
     url_features.append(i)
 
-    return
+    return url_features
 
 def load_images(file_name):
     img = Image.open(file_name)
@@ -203,22 +205,22 @@ def main():
 
     if st.button("Predict"):
         result = predict_url(url)
+        print(result)
 
         if result >= 0.6:
             prediction = 'phishing website'
             img = 'bad.png'
-            st.warning('The video: {}  is a malicious video'.format(prediction))
+            st.warning('The URL: {}  is a malicious URL'.format(prediction))
         else:
             prediction = 'benign website'
             img = 'good.png'
             st.success('The URL was classified as a {}'.format(prediction))
 
-
         load_images(img)
 
     st.subheader("About")
     st.info("Adnan Azem & Jode Shibli Final Project")
-    st.info("Link to the project:  "+ "")
+    st.info("Link to the project:  " + "")
 
 
 if __name__ == '__main__':
