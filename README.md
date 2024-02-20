@@ -1,6 +1,12 @@
 # Malicious-URL-Detection
 
 ## Dataset
+### In this project we use 2 datasets:
+<ul>
+  <li>
+    <b>First Dataset:</b>
+  </li>
+
 This dataset is created to form a Balanced URLs dataset with the same number of unique Benign and Malicious URLs. The total number of URLs in the dataset is 632,508 unique URLs.
 
 The creation of the dataset has involved 2 different datasets from Kaggle which are as follows:
@@ -22,7 +28,32 @@ All the URLs are in one .csv file with 3 columns:
   <li>Third column is the 'result' which also represents the class of the URL but with 0 and 1 values. {0 is benign and 1 is malicious}.</li>
 </ul>
 
-<b>Our Dataset Link:</b> <a href="https://www.kaggle.com/datasets/samahsadiq/benign-and-malicious-urls">Dataset</a>
+<b>Our First Dataset Link:</b> <a href="https://www.kaggle.com/datasets/samahsadiq/benign-and-malicious-urls">Dataset1</a>
+<li>
+  <b>Second Dataset:</b>  
+</li>
+This dataset has been collected from Alexa website ranking a blacklist of previous DGA domain names both sources are avaiblable within the provenance section.
+
+Files 4 files two DGA files, one alexa ranking dataset and an english words dataset.
+<ol>
+  <li>
+    <b>dga_project_dga_domain_list_clean.txt:</b> This file contains the name of the DGA (irrelevant IMO for just building a classifier), domain (most importanta information) name and a timestamp
+    What is important to keep as information are the domain names, the rest can be dropped as we will do some feature engineering to create relevant columns.
+  </li>
+  <li>
+    <b>dga_project_top-1m.csv:</b> This file contains legitimate domain names from Alexa, domain name are ranked by their popularity
+  </li>
+  <li>
+    <b>top-1m.csv:</b> This is similar to the previous file dga_project_top_1m.csv but a bit longer
+  </li>
+  <li>
+    <b>words.txt:</b> This is a ditionary of english words collected from <a href= "https://github.com/dwyl/english-words">github</a>. This file will be used to compare ngrams from domain names.
+  </li>
+</ol>
+
+<b>Our Second Dataset Link:</b> <a href="https://www.kaggle.com/datasets/slashtea/domain-generation-algorithm?select=dga_project_dga_domain_list_clean.txt">Dataset2</a>
+
+</ul>
 
 ## Feature Extraction
 The following features will be extracted from the URL for classification.
