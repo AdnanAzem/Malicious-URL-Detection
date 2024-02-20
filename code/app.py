@@ -4,6 +4,10 @@ import streamlit as st
 from PIL import Image
 import joblib
 
+import math
+from collections import Counter
+import tldextract
+
 # rf_clf = joblib.load('../models/RandomForest.pkl')
 rf_clf = joblib.load('../models/DisicionTree.pkl')
 
@@ -177,6 +181,42 @@ def extract_features(url):
 def load_images(file_name):
     img = Image.open(file_name)
     return st.image(img, width=150)
+
+############ DGA Features ############
+def entropy(domain_name):
+    """ Function which computes the entropy of a given domain name based on it's chars """
+    elements, length = Counter(domain_name), len(domain_name)
+
+    return -sum(element / length * math.log(element / length, 2) for element in elements.values())
+
+
+def get_domain_name(domain):
+    """ Function which extracts domain name from subdomain name """
+    res = tldextract.extract(domain)
+    return res.domain if len(res.domain) > len(res.subdomain) or entropy(res.domain) > entropy(res.subdomain) else res.subdomain
+
+# def domain_name(domain):
+#     return get_domain_name(domain)
+#
+# def domain_length(domain):
+#     return len(domain)
+#
+# def entropy(domain):
+#     return entropy(domain)
+
+def extract_DGA_features(domain):
+    dga_features = []
+
+    i = get_domain_name(domain)
+    dga_features.append(i)
+
+    i = len(domain)
+    dga_features.append(i)
+
+    i = entropy(domain)
+    dga_features.append(i)
+
+    return dga_features
 
 def main():
     image = Image.open('./pictures/cyber-security.jpeg')
