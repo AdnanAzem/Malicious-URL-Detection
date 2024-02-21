@@ -3,19 +3,26 @@ import re
 import streamlit as st
 from PIL import Image
 import joblib
+import numpy as np
+import pandas as pd
 
 import math
 from collections import Counter
 import tldextract
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.preprocessing import LabelEncoder
 
-# rf_clf = joblib.load('../models/RandomForest.pkl')
+dga_clf = joblib.load('../models/DGA.pkl')
 rf_clf = joblib.load('../models/DisicionTree.pkl')
-
+alexa_vc = joblib.load('../models/alexa_vc.pkl')
+dict_cv = joblib.load('../models/dict_cv.pkl')
 def predict_url(url):
 
     url_features = extract_features(url)
+    # dga_featurs = extract_DGA_features(url)
     rf_prediction = rf_clf.predict([url_features])
-    prediction = rf_prediction[0]
+    # dga_prediction = dga_clf.predict([dga_featurs])
+    prediction = rf_prediction[0]*0.6 + predict_domain_type(url)*0.4
     return prediction
 
 def redirection(url):
@@ -195,14 +202,72 @@ def get_domain_name(domain):
     res = tldextract.extract(domain)
     return res.domain if len(res.domain) > len(res.subdomain) or entropy(res.domain) > entropy(res.subdomain) else res.subdomain
 
-# def domain_name(domain):
-#     return get_domain_name(domain)
+def load_words():
+    words_df = pd.read_csv("../data/DGA/words.txt", names=["word"],
+                             encoding="utf-8", header=None, dtype={"word": np.str_}, sep='\t')
+    return words_df
+
+words = load_words()
+
+
+def predict_domain_type(domain):
+    # Extract features for the given domain
+    domain_name = get_domain_name(domain)
+    length = len(domain_name)
+    entropy_value = entropy(domain_name)
+
+    # Extract n-grams features using CountVectorizer
+    ngrams_features = alexa_vc.transform([domain_name])
+    ngrams_features = np.log10(np.asarray(ngrams_features.sum(axis=0)).flatten())
+
+    wordgram_feature = dict_cv.transform([domain_name])
+    wordgram_feature = dict_counts = np.log(np.asarray(wordgram_feature.sum(axis=0)).flatten())
+
+    # Create feature vector
+    feature_vector = np.concatenate(([length, entropy_value], ngrams_features, wordgram_feature))
+
+    # Reshape feature vector for prediction
+    # feature_vector = feature_vector.reshape(1, -1)
+
+    # Predict using the trained model
+    prediction = dga_clf.predict([feature_vector])
+
+    lb_dash = LabelEncoder()
+    # Convert prediction label back to original label
+    predicted_label = lb_dash.inverse_transform(prediction)[0]
+
+    return predicted_label
+
+# def clean_words_df(word):
+#     return str(word).strip().lower()
 #
-# def domain_length(domain):
-#     return len(domain)
+# def keep_alphanumeric(word):
+#     return str(word).isalpha()
 #
-# def entropy(domain):
-#     return entropy(domain)
+# def extract_dictionary_ngrams():
+#     """Extract n-grams features from a dictionary of words."""
+#     words_df = pd.read_csv("../data/DGA/words.txt", names=["word"],
+#                              encoding="utf-8", header=None, dtype={"word": np.str_}, sep='\t')
+#     words_df = words_df[words_df["word"].map(lambda word: str(word).isalpha())]
+#     words_df = words_df.map(lambda word: str(word).strip().lower())
+#     words_df = words_df.dropna()
+#     words_df = words_df.drop_duplicates()
+#     dict_cv = CountVectorizer(analyzer="char", ngram_range=(3, 5), min_df=0.00001, max_df=1.0)
+#     words_counts_matrix = dict_cv.fit_transform(words_df["word"])
+#     dict_counts = np.log(np.asarray(words_counts_matrix.sum(axis=0)).flatten())
+#     words_ngrams_list = dict_cv.get_feature_names_out()
+#     return dict_counts, words_ngrams_list
+#
+# def extract_alexa_ngrams(data):
+#     """Extract n-grams features from Alexa data."""
+#     split_condition = data["label"] == "legit"
+#     legit = data[split_condition]
+#     alexa_vc = CountVectorizer(analyzer="char", ngram_range=(3, 5), min_df=0.00001, max_df=1.0)
+#     counts_matrix = alexa_vc.fit_transform(legit["domain"])
+#     alexa_counts = np.log10(np.asarray(counts_matrix.sum(axis=0)).flatten())
+#     ngrams_list = alexa_vc.get_feature_names_out()
+#     return alexa_counts, ngrams_list
+
 
 def extract_DGA_features(domain):
     dga_features = []
@@ -215,6 +280,12 @@ def extract_DGA_features(domain):
 
     i = entropy(domain)
     dga_features.append(i)
+
+    # i = extract_dictionary_ngrams(domain)[0]
+    # dga_features.append(i)
+    #
+    # i = extract_alexa_ngrams(domain)[0]
+    # dga_features.append(i)
 
     return dga_features
 
