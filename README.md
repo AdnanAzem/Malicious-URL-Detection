@@ -56,7 +56,7 @@ Files 4 files two DGA files, one alexa ranking dataset and an english words data
 </ul>
 
 ## Feature Extraction
-The following features will be extracted from the URL for classification.
+The following features will be extracted from the URL of the first dataset for classification.
 <ol>
 <li>
     Length Features
@@ -93,3 +93,58 @@ The following features will be extracted from the URL for classification.
     </ul>
 </li>
 </ol>
+
+The following features will be extracted from the DGA of the secon dataset for classification.
+<br> 
+<ol>
+  <li>
+    Structural Features
+    <ul>
+      <li>Domain Name Length</li>
+      <li>Number of Subdomains</li>
+      <li>Subdomain Length Mean</li>
+      <li> Has www Prefix</li>
+      <li>Has www Prefix</li>
+      <li>Has valid TLD</li>
+      <li>Contains Single-Character Subdomain</li>
+      <li>Contains TLD as Subdomain</li>
+      <li>Underscore Ratio</li>
+      <li>Contains IP Address</li>
+    </ul>
+  </li>
+  <br> 
+  <li>
+    Linguistic Features
+    <ul>
+      <li>Contains Digits</li>
+      <li>Vowel Ratio</li>
+      <li>Digit Ratio</li>
+      <li>Ratio of Repeated Characters</li>
+      <li>Ratio of Consecutive Consonants</li>
+      <li> Ratio of Consecutive Digits</li>
+    </ul>
+  </li>
+  <br> 
+  <li>
+    Statistical Features
+    <ul>
+      <li>Entropy</li>
+      <li>words gram</li>
+      <li>alexia gram</li>
+    </ul>
+  </li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
