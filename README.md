@@ -155,6 +155,19 @@ For the second Dataset we trained 4 models:
   <li>XGBoost</li>
 </ul>
 
+## Results
+
+From the first dataset with the 4 models that we trained them we obtained the following accuracy and f1:
+1.	From Logistic Regression we obtained: 99.49% accuracy and 99% F1-score.
+2.	From Random Forest we obtained: 99.64% accuracy and 100% F1-score.
+3.	From Decision Tree we obtained: 99.45% accuracy and 99% F1-score.
+4.	From XGBoost we obtained: 99.64% accuracy and 100% F1-score.
+
+From the second dataset with the 4 models that we trained them we obtained the following accuracy:
+1.	From Lightbgm we obtained: 98.54% accuracy.
+2.	From Random Forest we obtained: 98.71% accuracy.
+3.	From XGBoost we obtained: 98.68% accuracy.
+4.	From Gradient-boosted we obtained: 97.64% accuracy.
 
 
 
