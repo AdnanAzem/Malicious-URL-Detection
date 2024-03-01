@@ -170,7 +170,11 @@ From the second dataset with the 4 models that we trained them we obtained the f
 4.	From Gradient-boosted we obtained: 97.64% accuracy.
 
 
-
+## How to Run
+1.  Go to code folder
+2.  Open CMD
+3.  Write the command: streamlit run app.py
+   
 
 
 
