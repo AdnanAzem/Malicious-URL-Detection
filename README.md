@@ -180,9 +180,10 @@ From the second dataset with the 4 models that we trained them we obtained the f
 
 
 ## How to Run
-1.  Go to code folder
-2.  Open CMD
-3.  Write the command: streamlit run app.py
+1.  Clone the Project
+2.  Go to code folder
+3.  Open CMD
+4.  Write the command: streamlit run app.py
    
 
 
