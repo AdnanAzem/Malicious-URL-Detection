@@ -135,6 +135,25 @@ The following features will be extracted from the DGA of the secon dataset for c
   </li>
 </ol>
 
+## Dataset Training and Testing Splits
+Both datasets were prepared for the training and testing using adopted machine-learning approach, where 80% of its instances were used for training, and the remaining 20% for testing.
+
+### Experiments
+For the first Dataset we trained 4 models:
+<ul>
+  <li>Logistic Regression</li>
+  <li>Random Forest</li>
+  <li>Decision Tree</li>
+  <li>XGBoost</li>
+</ul>
+
+For the second Dataset we trained 4 models:
+<ul>
+  <li>Lightbgm</li>
+  <li>Gradient Boosted </li>
+  <li>Random Forest</li>
+  <li>XGBoost</li>
+</ul>
 
 
 
