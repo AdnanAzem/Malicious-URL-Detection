@@ -1,5 +1,14 @@
 # Malicious-URL-Detection
 
+## Abstract
+Phishing presents a significant challenge distinct from other security risks like intrusions and malware, which exploit technical vulnerabilities in network systems. The vulnerability of any network lies in its users. Phishing URLs primarily aim at individuals and organizations through social engineering tactics, exploiting human weaknesses in information security awareness. These URLs entice online users to visit fraudulent websites, where their confidential data, including debit/credit card details and other sensitive information, are harvested.
+
+## Our Goal
+As part of our research, we created a model that allows you to perform a real-time check on any domain you want to access and determine whether it is malicious or valid.<br>
+![image](https://github.com/AdnanAzem/Malicious-URL-Detection/assets/88532380/704d06ee-060b-43cf-be95-2720e4aea683)
+
+
+
 ## Dataset
 ### In this project we use 2 datasets:
 <ul>
